@@ -11,8 +11,8 @@ if [ $# -ne 1 ]; then
 fi
 
 INPUT_ONNX_PATH="$1"
-OUTPUT_BASE_NAME=$(basename "$INPUT_ONNX_PATH")
-OUTPUT_MODEL_PATH="${OUTPUT_BASE_NAME%.*}"
+OUTPUT_MODEL_NAME=$(basename "$INPUT_ONNX_PATH" .onnx)
+OUTPUT_MODEL_PATH=$(echo ${INPUT_ONNX_PATH%/*}/${OUTPUT_MODEL_NAME})
 
 # Display input ONNX path and derived output names
 echo "Input ONNX Path: $INPUT_ONNX_PATH"
