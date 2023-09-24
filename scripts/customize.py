@@ -1,5 +1,6 @@
 import argparse
 import os
+import pathlib
 
 import tensorflow as tf
 
@@ -20,7 +21,9 @@ def main():
 
     input_directory = args.input_directory
     output_directory = os.path.join(args.output_directory, args.model_version)
-    
+
+    pathlib.Path(output_directory).mkdir(parents=True, exist_ok=True)
+
     print(f"Input directory: {input_directory}")
     print(f"Output directory: {output_directory}")
 
