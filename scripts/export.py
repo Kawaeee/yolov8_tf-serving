@@ -1,11 +1,13 @@
 import argparse
 
 from ultralytics import YOLO
+import torch
 
 
 def export(model_path: str, model_format: str = "onnx"):
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     model = YOLO(model_path)
-    model.export(format=model_format)
+    model.export(format=model_format, device=device)
 
 
 if __name__ == "__main__":

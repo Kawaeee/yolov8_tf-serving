@@ -1,3 +1,0 @@
-ultralytics==8.0.184
-onnx2tf==1.17.2
-tensorflow==2.13.0
