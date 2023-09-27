@@ -26,7 +26,7 @@ python scripts/export.py -i "${PYTORCH_MODEL_PATH}"
 ONNX_MODEL_PATH=$(ls "${WORK_DIRECTORY}"*.onnx)
 
 # Convert ONNX model to TensorFlow
-bash scripts/convert.sh "${ONNX_MODEL_PATH}"
+python scripts/convert.py -i "${ONNX_MODEL_PATH}"
 
 # Define TensorFlow model paths
 TF_MODEL_PATH=$(echo "${WORK_DIRECTORY%/*}/${INPUT_BASE_NAME}")
