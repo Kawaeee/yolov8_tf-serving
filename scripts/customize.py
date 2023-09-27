@@ -5,12 +5,6 @@ import pathlib
 import tensorflow as tf
 
 
-def load_model(model_path):
-    model = tf.saved_model.load(model_path)
-    default_signature = model.signatures["serving_default"]
-    return model, default_signature
-
-
 def main():
     parser = argparse.ArgumentParser(description="Load and modify a TensorFlow model.")
     parser.add_argument("-i", "--input-directory", type=str, required=True, help="Path to the model directory")
@@ -27,7 +21,8 @@ def main():
     print(f"Input directory: {input_directory}")
     print(f"Output directory: {output_directory}")
 
-    model, default_signature = load_model(input_directory)
+    model = tf.saved_model.load(input_directory)
+    default_signature = model.signatures["serving_default"]
 
     @tf.function
     def bytes_to_prediction(
