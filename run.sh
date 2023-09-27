@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Temporary CUDA activation (if needed)
+# break entire environment variables (only in this shell scope)
+CUDNN_PATH=$(dirname $(/opt/conda/envs/$CONDA_ENV_NAME/bin/python -c "import nvidia.cudnn;print(nvidia.cudnn.__file__)"))
+export LD_LIBRARY_PATH=$CUDNN_PATH/lib:$CONDA_PREFIX/lib/:$LD_LIBRARY_PATH
+
 # Define the work directory
 WORK_DIRECTORY="runs/$(echo $RANDOM | md5sum | head -c 8; echo;)/"
 INPUT_MODEL_PATH="${1}"
