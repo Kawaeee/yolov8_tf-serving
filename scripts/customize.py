@@ -26,7 +26,7 @@ def main():
 
     @tf.function
     def bytes_to_prediction(
-        image_bytes,
+        b64_image,
         model_shape=(640, 640),
         score_threshold=0.35,
         iou_threshold=0.65,
@@ -35,9 +35,13 @@ def main():
         model_height, model_width = model_shape
 
         # Preprocess
+        image_bytes = tf.io.decode_base64(b64_image)
+        print(image_bytes)
         bytes_image_scalar = tf.reshape(image_bytes, [])
         decoded_image = tf.image.decode_image(bytes_image_scalar, channels=3)
+        print(decoded_image)
         decoded_image_shape = tf.shape(decoded_image)
+        print(decoded_image_shape)
         image_height = decoded_image_shape[0]
         image_width = decoded_image_shape[1]
         channels = decoded_image_shape[2]
@@ -108,7 +112,7 @@ def main():
 
     # Create new signature, to read bytes images
     custom_signature = bytes_to_prediction.get_concrete_function(
-        image_bytes=tf.TensorSpec([None], dtype=tf.string, name="image_bytes")
+        b64_image=tf.TensorSpec([None], dtype=tf.string, name="b64_image")
     )
 
     # Adjust serving default to be better usage
