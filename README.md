@@ -19,6 +19,7 @@ docker build -t yolov8conv .
 ```bash
 # CPU
 docker run -it -v $(pwd):/data --rm yolov8conv /bin/bash
+
 # GPU
 docker run -it -v $(pwd):/data --gpus all --rm yolov8conv /bin/bash
 ```
@@ -34,4 +35,4 @@ wget -O /data/yolov8l.pt https://github.com/ultralytics/assets/releases/download
 bash /app/run.sh /data/yolov8l.pt
 ```
 
-> Once you have the converted model, you can try it by moving the contents of the "output" directory to the "demo/models" folder and then follow the instructions in the [README.md]() file in the "demo" section.
+* After obtaining the converted model, transfer the contents from the "output" directory to the "demo/models". Then, simply follow the instructions outlined in the [next steps](https://github.com/Kawaeee/yolov8_tf-serving/blob/main/demo/README.md).
