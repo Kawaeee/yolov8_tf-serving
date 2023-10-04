@@ -25,7 +25,7 @@ def main():
     default_signature = model.signatures["serving_default"]
 
     @tf.function
-    def bytes_to_prediction(
+    def b64_to_prediction(
         b64_image,
         model_shape=(640, 640),
         score_threshold=0.35,
@@ -36,12 +36,9 @@ def main():
 
         # Preprocess
         image_bytes = tf.io.decode_base64(b64_image)
-        print(image_bytes)
         bytes_image_scalar = tf.reshape(image_bytes, [])
         decoded_image = tf.image.decode_image(bytes_image_scalar, channels=3)
-        print(decoded_image)
         decoded_image_shape = tf.shape(decoded_image)
-        print(decoded_image_shape)
         image_height = decoded_image_shape[0]
         image_width = decoded_image_shape[1]
         channels = decoded_image_shape[2]
@@ -110,8 +107,8 @@ def main():
             boxes = tf.gather(boxes, applied_indices)
         return {"predictions": boxes}
 
-    # Create new signature, to read bytes images
-    custom_signature = bytes_to_prediction.get_concrete_function(
+    # Create new signature, to read b64 images
+    custom_signature = b64_to_prediction.get_concrete_function(
         b64_image=tf.TensorSpec([None], dtype=tf.string, name="b64_image")
     )
 
